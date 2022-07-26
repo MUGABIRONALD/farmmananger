@@ -1,0 +1,125 @@
+
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Welcome TO KGL FARM 
+  // Font Awesome
+  link(href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css' rel='stylesheet')
+  // Google Fonts
+  link(href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap' rel='stylesheet')
+  // MDB
+  link(href='https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.css' rel='stylesheet')
+  // Personal CSS
+  link(rel='stylesheet' href='style.css')
+  
+  script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.js')
+  script(src='user.js')
+section.bg
+  #background-image
+    img(src='./images/img.jpg' alt='KGL Logo' height='250px')
+    h3(style='\
+    color: #170804;\
+    font-weight: 900;\
+    font-size: 30px;\
+    padding: 20px;\
+    ')
+      | DEALERS IN SERIALS AND GRAINS - MAIZE,BEANS, COW PEAS AND MILLET
+    button.btn.btn-primary.me-md-2.mb-2(data-mdb-toggle='modal' data-mdb-target='#newuser')
+      | Login 
+      span or
+      |  Register
+// Login and Register Modal
+#newuser.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
+  .modal-dialog.modal-dialog-scrollable.modal-dialog-centered.modal-lg
+    .modal-content
+      .modal-header
+        h5#exampleModalLabel.modal-title
+          | Login or Register
+        button.btn-close(type='button' data-mdb-dismiss='modal' aria-label='Close')
+      .modal-body
+        // Pills navs
+        ul#pills-id.nav.nav-pills.nav-justified.mb-3(role='tablist')
+          li.nav-item(role='presentation')
+            a#tab-login.nav-link.active(data-mdb-toggle='pill' href='#pills-login' role='tab' aria-controls='pills-login' aria-selected='true') Login
+          li.nav-item(role='presentation')
+            a#tab-register.nav-link(data-mdb-toggle='pill' href='#pills-register' role='tab' aria-controls='pills-register' aria-selected='false') Register
+        // Pills navs
+        // Pills content
+        .tab-content
+          #pills-login.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='tab-login')
+            form
+              // Email input
+              .form-outline.mb-3
+                input#loginName.form-control(type='email' required='')
+                label.form-label(for='loginName') Email or username
+              // Password input
+              .form-outline.mb-3
+                input#loginPassword.form-control(type='password' required='')
+                label.form-label(for='loginPassword') Password
+              // Submit button
+              button.btn.btn-primary.btn-block.mb-3(type='submit')
+                | Login
+          #pills-register.tab-pane.fade(role='tabpanel' aria-labelledby='tab-register')
+            form(name='register' action='/register' method='POST' )
+              .row
+                #first-name.col-md-6.mb-2
+                  .form-floating
+                    input.form-control.form-control-lg(type='text' name='firstname' placeholder='' required='' onblur='fNameVal(2,15)')
+                    label.form-label(for='firstname') First Name
+                #last-name.col-md-6.mb-2
+                  .form-floating
+                    input#lastname.form-control.form-control-lg(type='text' placeholder='' required='' onblur='lNameVal(2,15)')
+                    label.form-label(for='lastname') Last Name
+              .row
+                #user-role.col-12.col-md-4.mb-2
+                  div
+                    label.form-label(for='role') Role:
+                    select.form-select(name='role' onblur='roleVal()' required='')
+                      option(value='' selected='') Select Role
+                      option(value='Manager') Manager
+                      option(value='Sales Agent') Sales Agent
+                #user-branch.col-12.col-md-4.mb-2
+                  div
+                    label.form-label(for='branch') Branch:
+                    select.form-select(name='branch' onblur='branchVal()' required='')
+                      option(value='' selected='') Select Branch
+                      option(value='Mattuga') Mattuga
+                      option(value='Sales Agent') Maganjo
+                .col-md-4.mb-2
+                  label(for='gender') Gender:
+                  .form-check
+                    input#femaleGender.form-check-input(type='radio' name='gender' value='Female' checked='')
+                    label.form-check-label(for='femaleGender') Female
+                  .form-check.form-check-inline
+                    input#maleGender.form-check-input(type='radio' name='gender' value='Male')
+                    label.form-check-label(for='maleGender') Male
+              .row
+                .col-md-6.mb-2.pb-2
+                  .form-floating
+                    input.form-control.form-control-lg(type='email' name='email' placeholder='' required='')
+                    label.form-label(for='email') Email
+                #tel-no.col-md-6.mb-2.pb-2
+                  .form-floating
+                    input.form-control.form-control-lg(type='number' name='telno' pattern='[0]{1}[0-9]{9}' placeholder='0701234567' required='' onblur='telNoVal()')
+                    label.form-label(for='telno') Contact
+              .row
+                #pwd.col-md-6.mb-2.pb-2
+                  .form-floating
+                    input#password.form-control.form-control-lg(type='password' name='password' placeholder='' required='' onblur='pwdVal(6)')
+                    label.form-label(for='password') Password
+                #pwd-conf.col-md-6.mb-2.pb-2
+                  .form-floating
+                    input.form-control.form-control-lg(type='password' name='passconf' placeholder='' required='' onblur='confPwd()')
+                    label.form-label(for='passconf') Confirm Password
+              // Submit button
+              button.btn.btn-primary.btn-block.mb-3(type='submit')
+                | Register
+        // Pills content
+// Copyright
+footer
+  .text-center.text-white.p-2.position-fixed.bottom-0.end-0(style='background-color: rgba(0, 0, 0, 0.3)')
+    | &copy; 2022 | RONALD MUGABI
+// Copyright)
+// MDB
+

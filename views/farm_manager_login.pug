@@ -1,0 +1,356 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Manager Dashboard | KGL
+  // Font Awesome
+  link(href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css' rel='stylesheet')
+  // Google Fonts
+  link(href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap' rel='stylesheet')
+  // BootStrap
+  link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css')
+  // MDB
+  link(href='https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.css' rel='stylesheet')
+  // Personal CSS
+  link(rel='stylesheet' href='style.css')
+// Main Navigation
+header
+  // Navbar
+  nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top(style='background-color: #812c13')
+    // Container wrapper
+    .container-fluid
+      // Toggle button
+      button.navbar-toggler(type='button' data-mdb-toggle='collapse' data-mdb-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+        i.fas.fa-bars
+      // Collapsible wrapper
+      #navbarSupportedContent.collapse.navbar-collapse
+        // Navbar brand
+        a.navbar-brand.mt-2.mt-lg-0(href='#')
+          img(src='./images/KGLogo.svg' height='20' alt='KGL Logo' loading='lazy')
+        // Left links
+        ul.navbar-nav.me-auto.mb-2.mb-lg-0
+          li.nav-item
+            a.nav-link(href='#') Dashboard
+        // Left links
+      // Collapsible wrapper
+      // Right elements
+      .d-flex.align-items-center
+        // Avatar
+        .dropdown
+          a#navbarDropdownMenuAvatar.dropdown-toggle.d-flex.align-items-center.hidden-arrow(href='#' role='button' data-mdb-toggle='dropdown' aria-expanded='false')
+            | Hi, UserName
+          ul.dropdown-menu.dropdown-menu-end(aria-labelledby='navbarDropdownMenuAvatar')
+            li
+              a.dropdown-item(href='#') Logout
+      // Right elements
+    // Container wrapper
+  // Navbar
+// Main Navigation
+// Main layout
+main
+  // Cards
+  .row
+    .col-sm-6.col-12.mb-2
+      .card
+        .card-body
+          .d-flex.justify-content-between.px-md-1
+            .align-self-center
+              i.fas.fas.fa-cart-plus.text-info.fa-3x
+            .text-end
+              h3 Produce Details
+              .d-flex.flex-column.flex-md-row
+                button.btn.btn-info.me-md-2.mb-2(data-mdb-toggle='modal' data-mdb-target='#newprod')
+                  | Add Procurement
+                a.btn.btn-info.mb-2 View Procurement
+    .col-sm-6.col-12.mb-2
+      .card
+        .card-body
+          .d-flex.justify-content-between.px-md-1
+            .align-self-center
+              i.fas.fa-cash-register.text-success.fa-3x
+            .text-end
+              h3 Sales
+              .d-flex.flex-column.flex-md-row
+                button.btn.btn-success.me-md-2.mb-2(data-mdb-toggle='modal' data-mdb-target='#newsales')
+                  | Add new Sales
+                a.btn.btn-success.mb-2 View Sales
+    .col-sm-6.col-12.mb-2
+      .card
+        .card-body
+          .d-flex.justify-content-between.px-md-1
+            .align-self-center
+              i.fas.fa-credit-card.text-warning.fa-3x
+            .text-end
+              h3 Deferred Sales
+              .d-flex.flex-column.flex-md-row
+                button.btn.btn-warning.me-md-2.mb-2(data-mdb-toggle='modal' data-mdb-target='#newcredit')
+                  | Add Sales on Credit
+                a.btn.btn-warning.mb-2 View Sales on Credit
+    .col-sm-6.col-12.mb-2
+      .card
+        .card-body
+          .d-flex.justify-content-between.px-md-1
+            .align-self-center
+              i.fas.fa-users.text-info.fa-3x
+            .text-end
+              h3 Users
+              .d-flex.flex-column.flex-md-row
+                button.btn.btn-info.me-md-2.mb-2(data-mdb-toggle='modal' data-mdb-target='#newuser')
+                  | Add new Users
+                a.btn.btn-info.mb-2 View Users
+  // Modals
+  // Produce Modal
+  #newprod.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
+    .modal-dialog.modal-dialog-scrollable.modal-dialog-centered.modal-lg
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title
+            | Add Procurement
+          button.btn-close(type='button' data-mdb-dismiss='modal' aria-label='Close')
+        .modal-body
+          form(name='produce')
+            #pdt-name.col-12.mb-2
+              .form-floating
+                input.form-control(type='text' name='prodname' onblur='pdtVal()' placeholder='' required='')
+                label.form-label(for='prodname') Name of Produce
+            .row
+              #pd-type.col-12.col-md-6.mb-2
+                div
+                  label.form-label(for='prodtype') Type of Produce
+                  select.form-select(name='prodtype' onblur='typeVal()' required='')
+                    option(value='' selected='') Select Type
+                    option(value='cereal') Cereal
+                    option(value='other') Other
+              #pd-time.col-12.col-md-6.mb-2
+                div
+                  label.form-label(for='prodtime') Time of Produce (Quarters)
+                  select.form-select(onblur='timeVal()' name='prodtime')
+                    option(value='' selected='') Select option
+                    option(value='1') Quarter 1
+                    option(value='2') Quarter 2
+                    option(value='3') Quarter 3
+                    option(value='4') Quarter 4
+            .row
+              .col-12.col-md-6.mb-2
+                div
+                  label.form-label(for='procdate') Date of Procurement
+                  input.form-control(type='text' name='procdate' readonly='' required='' onfocus='getDate(procdate)')
+              #dlr-type.col-12.col-md-6.mb-2
+                div
+                  label.form-label(for='dlrtype') Type of Dealer
+                  select.form-select(onblur='dlrTypeVal()' name='dlrtype')
+                    option(value='' selected='') Choose option
+                    option(value='Individual') Individual
+                    option(value='farm') Farm
+                    option(value='company') Company
+            .row
+              .col-12.col-md-6.mb-2
+                .form-floating
+                  input.form-control(type='number' min='100' name='tonnage' required='' placeholder='')
+                  label.form-label(for='tonnage') Tonnage (Kgs)
+              .col-12.col-md-6.mb-2
+                .form-floating
+                  input.form-control(type='number' min='10000' name='buy-price' placeholder='' required='')
+                  label.form-label(for='buy-price') Bought at (Ugx)
+            .row
+              #dlr-name.col-12.mb-2
+                .form-floating
+                  input.form-control(type='text' name='dlrname' placeholder='' required='' onblur='dlrVal(2)')
+                  label.form-label(for='dlrname') Name of Dealer
+            .row
+              #ptel-no.col-12.col-md-6.mb-2
+                .form-floating
+                  input.form-control(type='tel' name='telno' pattern='[0]{1}[0-9]{9}' placeholder='' onblur='ptelNoVal()' required='')
+                  label.form-label(for='telno') Contact
+              .col-12.col-md-6.mb-2
+                .form-floating
+                  input.form-control(type='number' min='100' name='price' placeholder='' required='')
+                  label.form-label(for='price') Sell at (Ugx)
+        .modal-footer
+          button.btn.btn-outline-danger(type='button' data-mdb-dismiss='modal')
+            | Close
+          button.btn.btn-secondary(type='submit')
+            | Save Details
+  // Sales Modal
+  #newsales.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
+    .modal-dialog.modal-dialog-scrollable.modal-dialog-centered.modal-lg
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Add Sale
+          button.btn-close(type='button' data-mdb-dismiss='modal' aria-label='Close')
+        .modal-body
+          form(name='sales')
+            .row
+              #spdt-name.col-12.mb-2
+                .form-floating
+                  input.form-control(type='text' name='prodname' required='' placeholder='' onblur='spdtVal()')
+                  label.form-label(for='prodname') Name of Produce
+            .row
+              .col-12.col-md-6.mb-2
+                .form-floating
+                  input.form-control(type='number' min='100' name='tonnage' required='' placeholder='')
+                  label.form-label(for='tonnage') Tonnage (Kgs)
+              .col-12.col-md-6.mb-2
+                .form-floating
+                  input.form-control(type='number' min='10000' name='price' required='' placeholder='')
+                  label.form-label(for='price') Amount Paid (Ugx)
+            .row
+              #byr-name.col-12.col-md-6.mb-2
+                .form-floating
+                  input.form-control(type='text' name='byrname' required='' placeholder='' onblur='byrVal(2)')
+                  label.form-label(for='byrname') Buyer&apos;s Name
+              #agt-name.col-12.col-md-6.mb-2
+                .form-floating
+                  input#agtname.form-control(type='text' required='' onblur='agtVal(2)' placeholder='')
+                  label.form-label(for='agtname') Sales Agent&apos;s Name
+            .row
+              .col-12.col-md-6.mb-2
+                div
+                  label(for='saledate') Date of Sale
+                  input.form-control(type='text' name='saledate' readonly='' required='' onfocus='getDate(saledate)')
+              .col-12.col-md-6.mb-2
+                div
+                  label(for='saletime') Time of Sale
+                  input#saletime.form-control(type='text' readonly='' placeholder='' required='' onfocus='getTime()')
+        .modal-footer
+          button.btn.btn-outline-danger(type='button' data-mdb-dismiss='modal')
+            | Close
+          button.btn.btn-secondary(type='button')
+            | Save Sale Details
+  // Deferred Sales Modal
+  #newcredit.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
+    .modal-dialog.modal-dialog-scrollable.modal-dialog-centered.modal-lg
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title
+            | Add Sale On Credit
+          button.btn-close(type='button' data-mdb-dismiss='modal' aria-label='Close')
+        .modal-body
+          form(name='csales')
+            .row
+              #cbyr-name.col-12.col-md-4.mb-2
+                .form-floating
+                  input.form-control(type='text' name='byrname' required='' placeholder='' onblur='cbyrVal(2)')
+                  label.form-label(for='byrname') Buyer&apos;s Name
+              #ni-num.col-12.col-md-4.mb-2
+                .form-floating
+                  input.form-control(type='text' name='nin' required='' placeholder='' onblur='ninVal()')
+                  label.form-label(for='nin') NIN
+              #loc-field.col-12.col-md-4.mb-2
+                .form-floating
+                  input.form-control(type='text' name='location' required='' placeholder='' onblur='locVal(2)')
+                  label.form-label(for='location') Location
+            .row
+              #ctel-no.col-12.col-md-4.mb-2
+                .form-floating
+                  input#telno.form-control(type='tel' pattern='[0]{1}[0-9]{9}' placeholder='0701123456' required='' onblur='ctelNoVal()')
+                  label.form-label(for='telno') Buyer&apos;s Contact
+              .col-12.col-md-4.mb-2
+                .form-floating
+                  input.form-control(type='number' min='10000' name='amtdue' required='' placeholder='')
+                  label.form-label(for='amtdue') Amount Due (UGX)
+              .col-12.col-md-4.mb-2
+                .form-floating
+                  input.form-control(type='number' min='100' name='tonnage' required='' placeholder='')
+                  label.form-label(for='tonnage') Tonnage (Kgs)
+            .row
+              .col-12.col-md-4.mb-2
+                div
+                  label(for='disdate') Date of Dispatch
+                  input#disdate.form-control(type='text' required='' readonly='' onfocus='getDate(disdate)')
+              .col-12.col-md-4.mb-2
+                div
+                  label(for='duedate') Due Date
+                  input#duedate.form-control(type='date' required='')
+              #cpd-type.col-12.col-md-4.mb-2
+                div
+                  label(for='pdtype') Type of Produce
+                  select.form-select(aria-label='Default select example' name='pdtype' onblur='pdTypeVal()')
+                    option(value='' selected='') Choose Option
+                    option(value='cereal') Cereal
+                    option(value='other') Other
+            .row
+              #cprod-name.col-12.mb-2
+                .form-floating
+                  input#prodname.form-control(type='text' placeholder='' required='' onblur='cpdtVal(2)')
+                  label.form-label(for='prodname') Name of Produce
+            .row
+              #cagt-name.col.mb-2
+                .form-floating
+                  input.form-control(type='text' name='agtname' placeholder='' required='' onblur='cagtVal(2)')
+                  label.form-label(for='agtname') Sales Agent&apos;s Name
+        .modal-footer
+          button.btn.btn-outline-danger(type='button' data-mdb-dismiss='modal')
+            | Close
+          button.btn.btn-secondary(type='button')
+            | Save Sale on Credit
+  // Users Modal
+  #newuser.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
+    .modal-dialog.modal-dialog-scrollable.modal-dialog-centered.modal-lg
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title
+            | Add Sales Agent
+          button.btn-close(type='button' data-mdb-dismiss='modal' aria-label='Close')
+        .modal-body
+          form(name='register')
+            .row
+              #first-name.col-md-6.mb-2
+                .form-floating
+                  input.form-control.form-control-lg(type='text' name='firstname' placeholder='' required='' onblur='fNameVal(2,15)')
+                  label.form-label(for='firstname') First Name
+              #last-name.col-md-6.mb-2
+                .form-floating
+                  input#lastname.form-control.form-control-lg(type='text' placeholder='' required='' onblur='lNameVal(2,15)')
+                  label.form-label(for='lastname') Last Name
+            .row
+              .col-md-6.mb-2
+                div
+                  label(for='position') Position
+                  input#position.form-control.form-control-lg(type='text' value='Sales Agent' readonly='')
+              .col-md-6.mb-2
+                h6.mb-2.pb-1 Gender:
+                .form-check.form-check-inline
+                  input#femaleGender.form-check-input(type='radio' name='gender' value='Female' checked='')
+                  label.form-check-label(for='femaleGender') Female
+                .form-check.form-check-inline
+                  input#maleGender.form-check-input(type='radio' name='gender' value='Male')
+                  label.form-check-label(for='maleGender') Male
+            .row
+              .col-md-6.mb-2.pb-2
+                .form-floating
+                  input.form-control.form-control-lg(type='email' name='email' placeholder='' required='')
+                  label.form-label(for='email') Email
+              #tel-no.col-md-6.mb-2.pb-2
+                .form-floating
+                  input.form-control.form-control-lg(type='tel' name='telno' pattern='[0]{1}[0-9]{9}' placeholder='0701234567' required='' onblur='telNoVal()')
+                  label.form-label(for='telno') Contact
+            .mb-2.pb-2
+              .form-floating
+                input.form-control.form-control-lg(type='text' name='branch' readonly='')
+                label.form-label(for='branch') Branch
+            .row
+              #pwd.col-md-6.mb-2.pb-2
+                .form-floating
+                  input#password.form-control.form-control-lg(type='password' placeholder='' required='' onblur='pwdVal(6)')
+                  label.form-label(for='password') Password
+              #pwd-conf.col-md-6.mb-2.pb-2
+                .form-floating
+                  input.form-control.form-control-lg(type='password' name='passconf' placeholder='' required='' onblur='confPwd()')
+                  label.form-label(for='passconf') Confirm Password
+        .modal-footer
+          button.btn.btn-outline-danger(type='button' data-mdb-dismiss='modal')
+            | Close
+          button.btn.btn-secondary(type='button')
+            | Save Sales Agent
+  // Modals - end
+// Main layout
+// Copyright
+footer
+  .text-white.p-2.position-fixed.bottom-0.end-0(style='background-color: rgba(0, 0, 0, 0.4)')
+    | &copy; 2022 | MUGABI RONALD
+// Copyright
+// MDB
+script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.js')
+script(src='./salesVal.js')
